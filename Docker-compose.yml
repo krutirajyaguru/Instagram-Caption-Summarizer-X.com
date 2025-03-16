@@ -1,0 +1,60 @@
+version: '3'
+
+services:
+  # Selenium service for Firefox browser automation
+  selenium-firefox:
+    image: selenium/standalone-firefox:latest
+    ports:
+      - "4444:4444"  # Expose the Selenium server port for remote communication
+    platform: linux/arm64/v8  # Ensure compatibility with ARM64 architecture
+    shm_size: 2g  # Allocate sufficient shared memory for better browser performance
+    networks:
+      - selenium_network
+
+  # Service to scrape Instagram data and store it in PostgreSQL
+  instagram_to_postgres:
+    build: ./instagram_to_postgres  # Build the Docker image from this directory
+    depends_on:
+      selenium-firefox:
+        condition: service_started  # Ensure Selenium is started before this service
+      postgresdb:
+        condition: service_healthy  # Ensure PostgreSQL is healthy before starting
+    command: python3 instagram_scraper.py  # Run the Instagram scraper script
+    environment:
+      SELENIUM_URL: http://selenium-firefox:4444/wd/hub  # URL for Selenium WebDriver
+    networks:
+      - selenium_network
+
+  # Service to read data from PostgreSQL and present it via a Streamlit app
+  postgres_to_twitter:
+    build: ./postgres_to_twitter  # Build the Docker image from this directory
+    ports:
+      - "8501:8501"  # Expose the Streamlit web application port
+    command: streamlit run app.py  # Launch the Streamlit application
+    depends_on:
+      postgresdb:
+        condition: service_healthy  # Ensure PostgreSQL is healthy before starting
+    networks:
+      - selenium_network
+
+  # PostgreSQL database service to store Instagram data
+  postgresdb:
+    image: postgres:latest  # Use the latest PostgreSQL image
+    environment:
+      POSTGRES_USER: postgres  # Database username
+      POSTGRES_PASSWORD: postgres  # Database password
+      POSTGRES_DB: insta_posts_db  # Database name
+    networks:
+      - selenium_network
+    ports:
+      - "5432:5432"  # Expose PostgreSQL database port
+    healthcheck:  # Health check to ensure PostgreSQL is ready
+      test: ["CMD-SHELL", "pg_isready -U postgres -d insta_posts_db"]
+      interval: 10s  # Perform health checks every 10 seconds
+      retries: 5  # Retry 5 times before marking as unhealthy
+      timeout: 5s  # Timeout for each health check
+
+# Define a shared network for communication between services
+networks:
+  selenium_network:
+    driver: bridge

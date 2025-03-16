@@ -1,0 +1,9 @@
+streamlit
+psycopg2-binary
+requests
+requests-oauthlib
+selenium
+sentencepiece
+torch>=1.9.0
+transformers>=4.0.0
+pytest
