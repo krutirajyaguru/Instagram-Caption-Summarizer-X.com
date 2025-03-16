@@ -1,7 +1,5 @@
 # Instagram-Caption-Summarizer-X.com
 
-# Instagram to Twitter Automation
-
 This project automates fetching captions from Instagram, storing them in PostgreSQL, and summarizing and posting them to Twitter with or without image — all in Docker containers.
 
 ![Instagram to Twitter Automation](Images/Instagram_to_Twitter.png)
