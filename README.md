@@ -2,12 +2,13 @@
 
 # Instagram to Twitter Automation
 
-This project automates fetching captions from Instagram, storing them in PostgreSQL, and summarizing and posting them to Twitter with or without image —all in Docker containers.
+This project automates fetching captions from Instagram, storing them in PostgreSQL, and summarizing and posting them to Twitter with or without image — all in Docker containers.
 
-    ![](Images/Instagram_to_Twitter.png)
+![Instagram to Twitter Automation](Images/Instagram_to_Twitter.png)
 
-# Architecture Diagram
+## Architecture Diagram
 
+```plaintext
         +-----------------------------+
         |         Docker Compose      |   
         |        (Manages Services)   | 
@@ -36,9 +37,7 @@ This project automates fetching captions from Instagram, storing them in Postgre
 |   Database      |       |    (Post Summarized     |
 |                 |       |     Tweets)             |
 +-----------------+       +-------------------------+
-                          
-                          
-
+```
 
 
 # Features
@@ -55,12 +54,13 @@ Docker Compose
 
 open terminal
 Check Docker Version: Ensure Docker is correctly installed:
-docker --version
-docker-compose --version
+    docker --version
+    docker-compose --version
 
 # Project Structure
 The project is organized into two main services:
 
+```plaintext
 insta_to_twitter_docker/
 ├── docker-compose.yml                    # Manage both services 
 │
@@ -69,13 +69,13 @@ insta_to_twitter_docker/
 │    ├── __init__.py                      # Package initialization file
 │    ├── instagram_scraper.py             # Instagram caption and image scraping logic
 │    ├── insta_post_to_postgres.py        # Logic for storing captions and images in PostgreSQL
-│    ├── config.py                        # Configuration file (DB  and Instagram credentials)
+│    ├── config.py                        # Configuration file (DB and Instagram credentials)
 │    ├── utils.py                         # Utility functions (e.g., logging setup)
 │    ├── README.md                        # Instructions for this service
 │    └── tests                            # Unit test
 │          └── test_scraper.py
 |
-└── postgres_to_twitter/                  # Service to summarize and tweet it with or witout image
+└── postgres_to_twitter/                  # Service to summarize and tweet it with or without image
      ├── Dockerfile                       # Docker image setup for Twitter posting service
      ├── __init__.py                      # Package initialization file
      ├── app.py                           # Streamlit app for UI
@@ -85,43 +85,45 @@ insta_to_twitter_docker/
      └── README.md                        # Instructions for this service
      └── tests                            # Unit test
           └── test_summarizer.py
+```
+
 
 # Setup Instructions
-Clone the Repository:
 
-git clone https://github.com/yourusername/Instagram-Caption-Summarizer-X.com.git
-
-
-Configure with the following content in config.py:
-
-# PostgreSQL Configuration (shared by both services)
-POSTGRES_USER=your_postgres_username
-POSTGRES_PASSWORD=your_postgres_password
-POSTGRES_DB=insta_posts_db
-
-# Twitter API (for postgres_to_twitter service)
-TWITTER_API_KEY=your_twitter_api_key
-TWITTER_API_SECRET_KEY=your_twitter_api_secret
-ACCESS_TOKEN=your_twitter_access_token
-ACCESS_TOKEN_SECRET=your_twitter_access_token_secret
+1. Clone the Repository:
+    git clone https://github.com/yourusername/Instagram-Caption-Summarizer-X.com.git
 
 
-cd instagram-to-twitter
+2. Configure with the following content in config.py:
 
-To build and start the Docker containers:
-docker-compose up --build
+    # PostgreSQL Configuration (shared by both services)
+    POSTGRES_USER=your_postgres_username
+    POSTGRES_PASSWORD=your_postgres_password
+    POSTGRES_DB=insta_posts_db
+    
+    # Twitter API (for postgres_to_twitter service)
+    TWITTER_API_KEY=your_twitter_api_key
+    TWITTER_API_SECRET_KEY=your_twitter_api_secret
+    ACCESS_TOKEN=your_twitter_access_token
+    ACCESS_TOKEN_SECRET=your_twitter_access_token_secret
 
-If you want to run it in detached mode (in the background):
-docker-compose up -d
 
-Access the Services:
-- Instagram to PostgreSQL: Runs in the background, fetching and storing data from Instagram.
-- PostgreSQL: Available at localhost:5432.
-- Streamlit App (Twitter Posting): http://localhost:8501
+3. cd instagram-to-twitter
 
-Run Tests manually:
-- docker-compose run --rm instagram_to_postgres pytest tests/test_scraper.py
-- docker-compose run --rm postgres_to_twitter pytest tests/test_summarizer.py
+4. To build and start the Docker containers:
+    docker-compose up --build
+
+    If you want to run it in detached mode (in the background):
+    docker-compose up -d
+
+5. Access the Services:
+    - Instagram to PostgreSQL: Runs in the background, fetching and storing data from Instagram.
+    - PostgreSQL: Available at localhost:5432.
+    - Streamlit App (Twitter Posting): http://localhost:8501
+
+6. Run Tests manually:
+    - docker-compose run --rm instagram_to_postgres pytest tests/test_scraper.py
+    - docker-compose run --rm postgres_to_twitter pytest tests/test_summarizer.py
 
 # Usage Guide
 
@@ -140,50 +142,47 @@ CREATE TABLE IF NOT EXISTS instagram_posts (
       );
 
 # Container Management Commands
-Docker Commands
-
-Start the Entire System (Instagram, PostgreSQL, and Twitter services):
-docker-compose up
-
-Rebuild Docker Images (to apply changes):
-docker-compose up --build
-
-Monitor the Logs: View real-time logs:
-docker-compose logs -f
-
-Check Active Containers:
-docker ps
-
-Access Containers: To access a running container (e.g., postgres_to_twitter), run:
-docker exec -it postgres_to_twitter bash
-
-Stop the Services: To stop all services (containers) running:
-docker-compose down
-
-Remove Volumes (if needed): If you want to remove volumes (including data in the PostgreSQL database):
-docker-compose down -v
-
-Remove Stopped Containers and Images (if needed):
-docker system prune -af
-
-
+    **Docker Commands**
+    
+    - Start the Entire System (Instagram, PostgreSQL, and Twitter services):
+        docker-compose up
+    
+    - Rebuild Docker Images (to apply changes):
+        docker-compose up --build
+    
+    - Monitor the Logs: View real-time logs:
+        docker-compose logs -f
+    
+    - Check Active Containers:
+        docker ps
+    
+    - Access Containers: To access a running container (e.g., postgres_to_twitter), run:
+        docker exec -it postgres_to_twitter bash
+    
+    - Stop the Services: To stop all services (containers) running:
+        docker-compose down
+    
+    - Remove Volumes (if needed): If you want to remove volumes (including data in the PostgreSQL database):
+        docker-compose down -v
+    
+    - Remove Stopped Containers and Images (if needed):
+        docker system prune -af
 
 # Troubleshooting
+
 Common Errors:
-1. urllib3.exceptions.NewConnectionError
 
-If you encounter connection issues, ensure that all containers and networks are removed:
-    docker-compose down --volumes --remove-orphans
-Then, recreate the network:
-docker network create selenium_network
-
-2. ARM64 Architecture Support with Selenium
-If you're running on an ARM64-based architecture (e.g., Apple M1/M2 or ARM-based servers) and experience issues with the default Selenium image, you can attempt to use selenium/standalone-chrome-debug which may have better support for ARM64.
-
-To ensure compatibility with ARM64, force Docker to use the ARM64 platform by specifying the platform as follows:
-    - docker pull --platform linux/arm64/v8 selenium/standalone-chrome-debug
-This will pull the appropriate version of the image for ARM64 and should resolve compatibility issues. After pulling the image, you can continue with the normal setup as described in the rest of the README.
-
+    1. urllib3.exceptions.NewConnectionError
+    If you encounter connection issues, ensure that all containers and networks are removed:
+        docker-compose down --volumes --remove-orphans
+    Then, recreate the network:
+    docker network create selenium_network
+    
+    2. ARM64 Architecture Support with Selenium
+    - If you're running on an ARM64-based architecture (e.g., Apple M1/M2 or ARM-based servers) and experience issues with the default Selenium image, you can attempt to use selenium/standalone-chrome-debug which may have better support for ARM64.
+    - To ensure compatibility with ARM64, force Docker to use the ARM64 platform by specifying the platform as follows:
+         docker pull --platform linux/arm64/v8 selenium/standalone-chrome-debug
+    - This will pull the appropriate version of the image for ARM64 and should resolve compatibility issues. After pulling the image, you can continue with the normal setup as described in the rest of the README.
 
 # Notes:
 
