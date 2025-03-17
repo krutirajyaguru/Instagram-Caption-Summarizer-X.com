@@ -47,13 +47,13 @@ This project automates fetching captions from Instagram, storing them in Postgre
 # Prerequisites
 Ensure you have the following installed:
 
-Docker
-Docker Compose
+- Docker
+- Docker Compose
 
-open terminal
-Check Docker Version: Ensure Docker is correctly installed:
-    docker --version
-    docker-compose --version
+**open terminal**
+- Check Docker Version: Ensure Docker is correctly installed:
+          - docker --version
+          - docker-compose --version
 
 # Project Structure
 The project is organized into two main services:
@@ -88,31 +88,29 @@ insta_to_twitter_docker/
 
 # Setup Instructions
 
-1. Clone the Repository:
-    git clone https://github.com/yourusername/Instagram-Caption-Summarizer-X.com.git
-
+1. Clone the Repository
+    git clone https://.../Instagram-Caption-Summarizer-X.com.git
 
 2. Configure with the following content in config.py:
 
-    # PostgreSQL Configuration (shared by both services)
-    POSTGRES_USER=your_postgres_username
-    POSTGRES_PASSWORD=your_postgres_password
-    POSTGRES_DB=insta_posts_db
+    ** PostgreSQL Configuration (shared by both services)**
+    - POSTGRES_USER=your_postgres_username
+    - POSTGRES_PASSWORD=your_postgres_password
+    - POSTGRES_DB=insta_posts_db
     
-    # Twitter API (for postgres_to_twitter service)
-    TWITTER_API_KEY=your_twitter_api_key
-    TWITTER_API_SECRET_KEY=your_twitter_api_secret
-    ACCESS_TOKEN=your_twitter_access_token
-    ACCESS_TOKEN_SECRET=your_twitter_access_token_secret
-
+    ** Twitter API (for postgres_to_twitter service)**
+    - TWITTER_API_KEY=your_twitter_api_key
+    - TWITTER_API_SECRET_KEY=your_twitter_api_secret
+    - ACCESS_TOKEN=your_twitter_access_token
+    - ACCESS_TOKEN_SECRET=your_twitter_access_token_secret
 
 3. cd instagram-to-twitter
 
 4. To build and start the Docker containers:
-    docker-compose up --build
+    - docker-compose up --build
 
-    If you want to run it in detached mode (in the background):
-    docker-compose up -d
+    - If you want to run it in detached mode (in the background):
+            - docker-compose up -d
 
 5. Access the Services:
     - Instagram to PostgreSQL: Runs in the background, fetching and storing data from Instagram.
@@ -132,12 +130,12 @@ insta_to_twitter_docker/
 # Database Schema
 Ensure your PostgreSQL database has the following schema:
 
-CREATE TABLE IF NOT EXISTS instagram_posts (
-          id SERIAL PRIMARY KEY,
-          caption TEXT UNIQUE,
-          image_url TEXT,
-          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
+        CREATE TABLE IF NOT EXISTS instagram_posts (
+                  id SERIAL PRIMARY KEY,
+                  caption TEXT UNIQUE,
+                  image_url TEXT,
+                  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+              );
 
 # Container Management Commands
     **Docker Commands**
@@ -191,5 +189,4 @@ Common Errors:
 # Extending the Project
 
 - Add More Summarization Models: Replace the Pegasus-CNN model with other Hugging Face models if desired.
-
 - Support Multiple Social Platforms: Extend the summarizer to post captions to LinkedIn, Facebook, or other platforms.
