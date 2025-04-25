@@ -38,7 +38,7 @@ pip install transformers torch sentencepiece
    - Ensure the app has *Read and Write* permissions and is set to *Web App, Automated App or Bot*.
    - Provide the following:
      - Callback URI: `https://example.com/callback`
-     - Website URL: `https://example.com/callback`
+     - Website URL: `https://example.com`
 
    **Note:** Avoid using `https://localhost` as it's not publicly accessible by Twitter servers.
 
