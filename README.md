@@ -148,7 +148,10 @@ Ensure your PostgreSQL database has the following schema:
     
     - Monitor the Logs: View real-time logs:
         docker-compose logs -f
-    
+        
+    - Logs of a specific Docker container
+        docker logs <container_name_or_id>
+        
     - Check Active Containers:
         docker ps
     
