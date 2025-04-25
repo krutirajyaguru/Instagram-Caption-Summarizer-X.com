@@ -22,6 +22,8 @@ services:
     command: python3 instagram_scraper.py  # Run the Instagram scraper script
     environment:
       SELENIUM_URL: http://selenium-firefox:4444/wd/hub  # URL for Selenium WebDriver
+    volumes:
+      - /path/to/local/logs:/app/logs  # Mount the local logs directory to container's /app/logs
     networks:
       - selenium_network
 
@@ -34,6 +36,8 @@ services:
     depends_on:
       postgresdb:
         condition: service_healthy  # Ensure PostgreSQL is healthy before starting
+    volumes:
+      - /path/to/local/logs:/app/logs  # Mount the local logs directory to container's /app/logs
     networks:
       - selenium_network
 
