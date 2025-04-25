@@ -66,12 +66,8 @@ class InstagramScraper:
             self.driver.find_element(By.NAME, "password").send_keys(self.password)
             self.driver.find_element(By.NAME, "password").send_keys(Keys.RETURN)
 
-            WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, "//a[@href='/explore/']"))
-            )
             logger.info("Logged in successfully.")
 
-            self.close_popup("//button[contains(text(), 'Not Now')]")
             self.close_popup("//button[contains(text(), 'Not Now')]")
         except Exception as e:
             logger.error(f"Error during login: {e}")
