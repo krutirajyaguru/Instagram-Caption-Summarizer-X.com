@@ -1,0 +1,30 @@
+2025-04-25 15:02:36,262 - INFO - Logging is set up.
+2025-04-25 15:02:39,559 - INFO - Opened Instagram login page.
+2025-04-25 15:02:40,266 - INFO - Logged in successfully.
+2025-04-25 15:02:50,573 - INFO - No popup found or failed to interact: Message: 
+Stacktrace:
+RemoteError@chrome://remote/content/shared/RemoteError.sys.mjs:8:8
+WebDriverError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:199:5
+NoSuchElementError@chrome://remote/content/shared/webdriver/Errors.sys.mjs:552:5
+dom.find/</<@chrome://remote/content/shared/DOM.sys.mjs:136:16
+
+2025-04-25 15:02:51,535 - INFO - Navigating to profile: https://www.instagram.com/bbcnews/
+2025-04-25 15:02:52,613 - INFO - Fetched 5 posts.
+2025-04-25 15:02:52,624 - INFO - Connected to PostgreSQL database.
+2025-04-25 15:02:52,627 - INFO - Ensured 'instagram_posts' table exists.
+2025-04-25 15:02:52,627 - INFO - Processing post 1 URL: https://www.instagram.com/bbcnews/p/DI365yYtKE-/
+2025-04-25 15:02:54,685 - INFO - Successfully stored post in PostgreSQL.
+2025-04-25 15:02:54,685 - INFO - ----------------------------------------
+2025-04-25 15:02:54,686 - INFO - Processing post 2 URL: https://www.instagram.com/bbcnews/p/DI3buqwt8Kz/
+2025-04-25 15:02:57,276 - INFO - Caption already exists. Skipping insertion.
+2025-04-25 15:02:57,277 - INFO - ----------------------------------------
+2025-04-25 15:02:57,280 - INFO - Processing post 3 URL: https://www.instagram.com/bbcnews/p/DI1j_m5szYl/
+2025-04-25 15:02:59,687 - INFO - Caption already exists. Skipping insertion.
+2025-04-25 15:02:59,687 - INFO - ----------------------------------------
+2025-04-25 15:02:59,688 - INFO - Processing post 4 URL: https://www.instagram.com/bbcnews/p/DI1dce7sFT0/
+2025-04-25 15:03:02,152 - INFO - Caption already exists. Skipping insertion.
+2025-04-25 15:03:02,153 - INFO - ----------------------------------------
+2025-04-25 15:03:02,154 - INFO - Processing post 5 URL: https://www.instagram.com/bbcnews/p/DI08OJVMEak/
+2025-04-25 15:03:04,854 - INFO - Caption already exists. Skipping insertion.
+2025-04-25 15:03:04,854 - INFO - ----------------------------------------
+2025-04-25 15:03:05,575 - INFO - Scraping completed. Browser closed.
